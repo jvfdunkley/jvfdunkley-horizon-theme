@@ -118,6 +118,9 @@
       {{- form.body -}}
     </textarea>
 
+    <input type="hidden" name="contact[page_url]" value="{{ canonical_url }}">
+    <input type="hidden" name="contact[page_title]" value="{{ page_title }}">
+
     {{ submit_button }}
   {%- endform -%}
 </div>
