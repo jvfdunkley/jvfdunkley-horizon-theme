@@ -1,0 +1,46 @@
+{
+  "devDependencies": {
+    "@babel/preset-env": "^7.17.10",
+    "@symfony/webpack-encore": "^2.1.0",
+    "autoprefixer": "^10.4.2",
+    "babel-eslint": "^8.2.1",
+    "core-js": "^3.22.5",
+    "eslint": "^8.14.0",
+    "eslint-loader": "^4.0.2",
+    "file-loader": "^6.0.0",
+    "postcss": "^8.4.5",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^6.0.0",
+    "postcss-preset-env": "^7.7.1",
+    "prettier": "^3.2.0",
+    "regenerator-runtime": "^0.13.2",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.4.0",
+    "tailwindcss": "^3.3.6",
+    "webpack-notifier": "^1.6.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "theme-version": "Horizon 12.4.0",
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "concurrently \" yarn run watch \" \" yarn run shopify:dev\"",
+    "shopify:dev": "shopify theme dev --store=test-store-jvfdunkley",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress",
+    "format": "prettier --write \"src/**/*.{js,scss}\" \"*.{js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,scss}\" \"*.{js,json}\""
+  },
+  "dependencies": {
+    "@babel/plugin-transform-classes": "^7.16.7",
+    "babel-plugin-transform-builtin-classes": "^0.6.1",
+    "concurrently": "^9.1.2",
+    "eslint-webpack-plugin": "^3.1.0",
+    "husky": "7.0.2",
+    "imagemin-webp-webpack-plugin": "^3.3.1"
+  },
+  "browserslist": [
+    "ie 10",
+    "last 2 version"
+  ]
+}

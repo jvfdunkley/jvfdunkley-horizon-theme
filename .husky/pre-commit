@@ -1,0 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Remove the specified files from staging
+if git ls-files --error-unmatch assets/entry-* > /dev/null 2>&1; then
+    git rm --cached assets/entry-*
+else
+    echo "File assets/entry-* does not exist."
+fi

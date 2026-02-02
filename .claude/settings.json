@@ -1,0 +1,94 @@
+{
+  "defaultMode": "acceptEdits",
+  "allowedPrompts": [                                                                                                                                                   
+    {                                                                                                                                                                     
+      "tool": "Bash",                                                                                                                                                     
+      "prompt": "manage GitHub issues and PRs"                                                                                                                            
+    }                                                                                                                                                                    
+    ],                                                                                                                                                                 
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "branch=$(git branch --show-current 2>/dev/null); if [[ \"$branch\" == \"main\" || \"$branch\" == \"master\" ]]; then echo 'BLOCK: Cannot edit files on main/master branch. Please create a feature branch first.' && exit 1; fi"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "Bash|Edit|Write|Read|NotebookEdit|Glob|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/auto-approve-worktree.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); usage=$(echo \"$input\" | jq '.context_window.current_usage'); output=''; if [ -d \"$cwd/.git\" ]; then branch=$(git -C \"$cwd\" --git-dir=\"$cwd/.git\" --work-tree=\"$cwd\" branch --show-current 2>/dev/null || git -C \"$cwd\" --git-dir=\"$cwd/.git\" --work-tree=\"$cwd\" rev-parse --short HEAD 2>/dev/null); [ -n \"$branch\" ] && output=\"$branch\"; fi; if [ \"$usage\" != \"null\" ]; then current=$(echo \"$usage\" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens'); size=$(echo \"$input\" | jq '.context_window.context_window_size'); pct=$((current * 100 / size)); [ -n \"$output\" ] && output=\"$output | \"; output=\"${output}${pct}% context\"; fi; echo \"$output\""
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true
+  },
+  "enabledMcpjsonServers": ["chrome-1", "chrome-2", "chrome-3", "chrome-4", "chrome-5"],
+  "additionalDirectories": ["~/Desktop/mosaic-demo-feb-2", "~/Desktop/mosaic-demo-feb-2/worktrees"],
+
+  "permissions": {
+    "allow": [
+      "Write(../worktrees/**)",
+      "WebSearch",
+      "Bash(basename $(git rev-parse --show-toplevel))",
+      "Bash(lsof *)",
+      "Bash(* | *)",
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:npmjs.com)",
+      "Bash(grep:*)",
+      "Bash(gh *)",
+      "Read",
+      "mcp__chrome-devtools__*",
+      "TaskOutput",
+      "Bash(npm run shopify:dev *)",
+      "Bash(git worktree:*)",
+      "Bash(cd *)",
+      "Bash(basename *)",
+      "Bash(echo *)",
+      "Bash(pwd)",
+      "Bash(yarn:*)",
+      "Bash(npm run:*)",
+      "Edit(../worktrees/jvfdunkley-claude-workflow-test-*/**)",
+      "Read(../worktrees/jvfdunkley-claude-workflow-test-*/**)",
+      "Edit(**/locales/**)",
+      "Edit(**/assets/**)",
+      "Edit(**/sections/**)",
+      "Edit(**/templates/**)",
+      "Edit(**/snippets/**)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Read(**/.env*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/credentials/**)",
+      "Read(**/.aws/**)",
+      "Read(**/.ssh/**)",
+      "Read(**/docker-compose*.yml)",
+      "Read(**/config/database.yml)",
+      "Read(**/secrets/**)"
+    ]
+  }
+}
