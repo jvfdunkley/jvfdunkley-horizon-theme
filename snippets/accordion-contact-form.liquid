@@ -113,6 +113,8 @@
           <label for='contact-form-message' class='input__label'>{{ 'contact.form.message' | t }}</label>
         </div>
 
+        <input type='hidden' name='contact[page_url]' value='{{ canonical_url }}'>
+
         <button is='loader-button' type='submit' class='form__submit button button--primary button--full'>
           {{ 'contact.form.submit' | t }}
         </button>
